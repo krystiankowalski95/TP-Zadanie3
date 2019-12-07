@@ -26,6 +26,7 @@
       <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="Product_BillOfMaterials" Member="Product" ThisKey="ComponentID" OtherKey="ProductID" Type="Product" IsForeignKey="true" />
       <Association Name="Product_BillOfMaterials1" Member="Product1" ThisKey="ProductAssemblyID" OtherKey="ProductID" Type="Product" IsForeignKey="true" />
+      <Association Name="UnitMeasure_BillOfMaterials" Member="UnitMeasure" ThisKey="UnitMeasureCode" OtherKey="UnitMeasureCode" Type="UnitMeasure" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="Production.Culture" Member="Culture">
@@ -52,6 +53,7 @@
       <Column Name="Availability" Type="System.Decimal" DbType="Decimal(8,2) NOT NULL" CanBeNull="false" />
       <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="Location_ProductInventory" Member="ProductInventory" ThisKey="LocationID" OtherKey="LocationID" Type="ProductInventory" />
+      <Association Name="Location_WorkOrderRouting" Member="WorkOrderRouting" ThisKey="LocationID" OtherKey="LocationID" Type="WorkOrderRouting" />
     </Type>
   </Table>
   <Table Name="Production.Product" Member="Product">
@@ -90,8 +92,11 @@
       <Association Name="Product_ProductReview" Member="ProductReview" ThisKey="ProductID" OtherKey="ProductID" Type="ProductReview" />
       <Association Name="Product_TransactionHistory" Member="TransactionHistory" ThisKey="ProductID" OtherKey="ProductID" Type="TransactionHistory" />
       <Association Name="Product_ProductVendor" Member="ProductVendor" ThisKey="ProductID" OtherKey="ProductID" Type="ProductVendor" />
+      <Association Name="Product_WorkOrder" Member="WorkOrder" ThisKey="ProductID" OtherKey="ProductID" Type="WorkOrder" />
       <Association Name="ProductModel_Product" Member="ProductModel" ThisKey="ProductModelID" OtherKey="ProductModelID" Type="ProductModel" IsForeignKey="true" />
       <Association Name="ProductSubcategory_Product" Member="ProductSubcategory" ThisKey="ProductSubcategoryID" OtherKey="ProductSubcategoryID" Type="ProductSubcategory" IsForeignKey="true" />
+      <Association Name="UnitMeasure_Product" Member="UnitMeasure" ThisKey="SizeUnitMeasureCode" OtherKey="UnitMeasureCode" Type="UnitMeasure" IsForeignKey="true" />
+      <Association Name="UnitMeasure_Product1" Member="UnitMeasure1" ThisKey="WeightUnitMeasureCode" OtherKey="UnitMeasureCode" Type="UnitMeasure" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="Production.ProductCategory" Member="ProductCategory">
@@ -228,6 +233,7 @@
       <Column Name="ScrapReasonID" Type="System.Int16" DbType="SmallInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="ScrapReason_WorkOrder" Member="WorkOrder" ThisKey="ScrapReasonID" OtherKey="ScrapReasonID" Type="WorkOrder" />
     </Type>
   </Table>
   <Table Name="Production.TransactionHistory" Member="TransactionHistory">
@@ -272,6 +278,53 @@
       <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Association Name="Product_ProductVendor" Member="Product" ThisKey="ProductID" OtherKey="ProductID" Type="Product" IsForeignKey="true" />
       <Association Name="Vendor_ProductVendor" Member="Vendor" ThisKey="BusinessEntityID" OtherKey="BusinessEntityID" Type="Vendor" IsForeignKey="true" />
+      <Association Name="UnitMeasure_ProductVendor" Member="UnitMeasure" ThisKey="UnitMeasureCode" OtherKey="UnitMeasureCode" Type="UnitMeasure" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Production.UnitMeasure" Member="UnitMeasure">
+    <Type Name="UnitMeasure">
+      <Column Name="UnitMeasureCode" Type="System.String" DbType="NChar(3) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="UnitMeasure_BillOfMaterials" Member="BillOfMaterials" ThisKey="UnitMeasureCode" OtherKey="UnitMeasureCode" Type="BillOfMaterials" />
+      <Association Name="UnitMeasure_Product" Member="Product" ThisKey="UnitMeasureCode" OtherKey="SizeUnitMeasureCode" Type="Product" />
+      <Association Name="UnitMeasure_Product1" Member="Product1" ThisKey="UnitMeasureCode" OtherKey="WeightUnitMeasureCode" Type="Product" />
+      <Association Name="UnitMeasure_ProductVendor" Member="ProductVendor" ThisKey="UnitMeasureCode" OtherKey="UnitMeasureCode" Type="ProductVendor" />
+    </Type>
+  </Table>
+  <Table Name="Production.WorkOrder" Member="WorkOrder">
+    <Type Name="WorkOrder">
+      <Column Name="WorkOrderID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ProductID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OrderQty" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StockedQty" Type="System.Int32" DbType="Int NOT NULL" IsDbGenerated="true" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="ScrappedQty" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="StartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DueDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ScrapReasonID" Type="System.Int16" DbType="SmallInt" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="WorkOrder_WorkOrderRouting" Member="WorkOrderRouting" ThisKey="WorkOrderID" OtherKey="WorkOrderID" Type="WorkOrderRouting" />
+      <Association Name="Product_WorkOrder" Member="Product" ThisKey="ProductID" OtherKey="ProductID" Type="Product" IsForeignKey="true" />
+      <Association Name="ScrapReason_WorkOrder" Member="ScrapReason" ThisKey="ScrapReasonID" OtherKey="ScrapReasonID" Type="ScrapReason" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="Production.WorkOrderRouting" Member="WorkOrderRouting">
+    <Type Name="WorkOrderRouting">
+      <Column Name="WorkOrderID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProductID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="OperationSequence" Type="System.Int16" DbType="SmallInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="LocationID" Type="System.Int16" DbType="SmallInt NOT NULL" CanBeNull="false" />
+      <Column Name="ScheduledStartDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ScheduledEndDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ActualStartDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ActualEndDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ActualResourceHrs" Type="System.Decimal" DbType="Decimal(9,4)" CanBeNull="true" />
+      <Column Name="PlannedCost" Type="System.Decimal" DbType="Money NOT NULL" CanBeNull="false" />
+      <Column Name="ActualCost" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="ModifiedDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Location_WorkOrderRouting" Member="Location" ThisKey="LocationID" OtherKey="LocationID" Type="Location" IsForeignKey="true" />
+      <Association Name="WorkOrder_WorkOrderRouting" Member="WorkOrder" ThisKey="WorkOrderID" OtherKey="WorkOrderID" Type="WorkOrder" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
