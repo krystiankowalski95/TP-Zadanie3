@@ -59,7 +59,6 @@
     <None Include="app.config" />
     <None Include="DataClasses1.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
     <None Include="DataClasses1.dbml.layout">
