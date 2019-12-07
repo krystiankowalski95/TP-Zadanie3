@@ -49,6 +49,17 @@ namespace UnitTests
             Assert.AreEqual(productNames.Count, 9);
         }
 
-        
+        [TestMethod]
+        public void GetNRecentlyReviewedProductsTest()
+        {
+            DataClasses1DataContext context = new DataClasses1DataContext();
+            List<Product> products = LinqQueries.GetNRecentlyReviewedProducts(100);
+            foreach(Product pro in products)
+            {
+                Console.WriteLine(pro.Name);
+            }
+        }
+
+
     }
 }

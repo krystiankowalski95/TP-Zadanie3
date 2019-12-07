@@ -70,5 +70,19 @@ namespace Zadanie3
                 return products;
             }
         }
+
+        public static List<Product> GetNRecentlyReviewedProducts(int howManyProducts)
+        {
+            using (DataClasses1DataContext context = new DataClasses1DataContext())
+            {
+                Table<ProductReview> table = context.GetTable<ProductReview>();
+                List<Product> products = (from review in table
+                                          orderby review.ReviewDate
+                                          select review.Product).Take(howManyProducts).ToList();
+                return products;
+            }
+        }
+
+
     }
 }
