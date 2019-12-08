@@ -53,12 +53,33 @@ namespace UnitTests
         public void GetNRecentlyReviewedProductsTest()
         {
             DataClasses1DataContext context = new DataClasses1DataContext();
-            List<Product> products = LinqQueries.GetNRecentlyReviewedProducts(100);
-            foreach(Product pro in products)
-            {
-                Console.WriteLine(pro.Name);
-            }
+            List<Product> products = LinqQueries.GetNRecentlyReviewedProducts(2);
+            Assert.AreEqual(products.Count, 2);
+            
         }
+
+        [TestMethod]
+        public void GetNProductsFromCategoryTest()
+        {
+            DataClasses1DataContext context = new DataClasses1DataContext();
+            List<Product> products = LinqQueries.GetNProductsFromCategory("Bikes",25);
+            Assert.AreEqual(products.Count, 25);
+        }
+
+        [TestMethod]
+        public void GetTotalStandardCostByCategoryTest()
+        {
+            ProductCategory testCategory = new ProductCategory();
+            testCategory.Name = "Bikes";
+
+            DataClasses1DataContext context = new DataClasses1DataContext();
+            int value = LinqQueries.GetTotalStandardCostByCategory(testCategory);
+            Assert.AreEqual(value, 92093);
+        }
+
+        
+
+        
 
 
     }

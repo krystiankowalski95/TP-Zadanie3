@@ -77,9 +77,33 @@ namespace Zadanie3
             {
                 Table<ProductReview> table = context.GetTable<ProductReview>();
                 List<Product> products = (from review in table
-                                          orderby review.ReviewDate
+                                          orderby review.ReviewDate descending
                                           select review.Product).Take(howManyProducts).ToList();
                 return products;
+            }
+        }
+
+        public static List<Product> GetNProductsFromCategory(string categoryName, int n)
+        {
+            using (DataClasses1DataContext context = new DataClasses1DataContext())
+            {
+                Table<Product> table = context.GetTable<Product>();
+                List<Product> products = (from product in table
+                                          where product.ProductSubcategory.ProductCategory.Name.Equals(categoryName)
+                                          select product).Take(n).ToList();
+                return products;
+            }
+        }
+
+        public static int GetTotalStandardCostByCategory(ProductCategory category)
+        {
+            using (DataClasses1DataContext context = new DataClasses1DataContext())
+            {
+                Table<Product> table = context.GetTable<Product>();
+                int totalCost = Convert.ToInt32((from product in table
+                                            where product.ProductSubcategory.ProductCategory.Name.Equals(category.Name)
+                                            select product.StandardCost).ToList().Sum());
+                return totalCost;
             }
         }
 
