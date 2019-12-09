@@ -33,5 +33,16 @@ namespace Zadanie3.Properties {
                 return ((string)(this["AdventureWorksConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-5IBQS2A;Initial Catalog=AdventureWorks2014;Integrated Securit" +
+            "y=True")]
+        public string AdventureWorks2014ConnectionString {
+            get {
+                return ((string)(this["AdventureWorks2014ConnectionString"]));
+            }
+        }
     }
 }
