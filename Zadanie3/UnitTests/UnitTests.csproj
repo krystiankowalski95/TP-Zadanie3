@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LinqQueriesTests.cs" />
+    <Compile Include="MyProductCollectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ExtensionMethodsTests.cs" />
   </ItemGroup>
