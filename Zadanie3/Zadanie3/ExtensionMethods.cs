@@ -39,7 +39,20 @@ namespace Zadanie3
             }
             return stringBuilder.ToString();
         }
-        
+
+        public static string ProductsAndVendorsToString__MethodSyntax(this List<Product> products, List<ProductVendor> productVendors)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            var pairs = products.Join(productVendors, product => product.ProductID, vendor => vendor.ProductID, (product, productVendor)
+                => new { Product = product.Name, Vendor = productVendor.Vendor.Name });
+
+            foreach (var pair in pairs)
+            {
+                stringBuilder.Append(pair.Product).Append("-").Append(pair.Vendor).Append("\n");
+            }
+            return stringBuilder.ToString();
+        }
+
         public static List<Product> GetProductsWithoutCategory__MethodSyntax(this List<Product> products)
         {
             return products.Where(p => p.ProductSubcategory == null).ToList();
@@ -50,18 +63,7 @@ namespace Zadanie3
             return products.Skip((pageNumber - 1) * size).Take(size).ToList();
         }
 
-        public static string ProductsAndVendorsToString__MethodSyntax(this List<Product> products, List<ProductVendor> productVendors)
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            var pairs = products.Join(productVendors, product => product.ProductID, vendor => vendor.ProductID, (product, productVendor) 
-                => new { Product = product.Name, Vendor = productVendor.Vendor.Name });
-
-            foreach (var pair in pairs)
-            {
-                stringBuilder.Append(pair.Product).Append("-").Append(pair.Vendor).Append("\n");
-            }
-            return stringBuilder.ToString();
-        }
+      
 
 
 

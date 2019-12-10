@@ -7,7 +7,7 @@ using System.Data.Linq;
 namespace UnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class LinqQueriesTests
     {
         [TestMethod]
         public void GetProductsByNameTest()
@@ -76,11 +76,5 @@ namespace UnitTests
             int value = LinqQueries.GetTotalStandardCostByCategory(testCategory);
             Assert.AreEqual(value, 92093);
         }
-
-        
-
-        
-
-
     }
 }
